@@ -19,13 +19,10 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-resource "aws_s3_bucket" "state_object" {
-  bucket = "terraform-multiaz"
-}
-
 resource "aws_instance" "app_server" {
   ami           = "ami-0ab3794db9457b60a"
   instance_type = "t2.micro"
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   tags = {
     Name = var.instance_name
